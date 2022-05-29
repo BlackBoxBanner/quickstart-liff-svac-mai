@@ -29,7 +29,7 @@ const friendShip = document.getElementById('friendShip');
 const main = async () => {
   await liff.init({ liffId: '1657173840-Y3WOkO79' });
   checkBackground();
-
+  btnScanCode.style.display = 'block';
   if (!liff.isInClient()) {
     btnLogIn.style.display = 'block';
     btnLogOut.style.display = 'block';
@@ -50,15 +50,10 @@ const main = async () => {
     btnSend.style.display = 'block';
     btnShare.style.display = 'block';
   }
+  btnOpenWindow.style.display = 'block';
 };
 
 main();
-
-// control
-
-if (liff.isInClient() && liff.getOS() === 'android') {
-  btnScanCode.style.display = 'block';
-}
 
 // Compoent function
 
@@ -94,6 +89,7 @@ const sendMsg = async () => {
       },
     ]);
     alert('Message sent');
+    liff.closeWindow();
   }
 };
 
@@ -108,7 +104,7 @@ const shareMsg = async () => {
 };
 
 const scanCode = async () => {
-  const result = await liff.scanCode();
+  const result = await liff.scanCodeV2();
   code.innerHTML = '<b>Code: </b>' + result.value;
 };
 
@@ -133,4 +129,11 @@ btnShare.onclick = () => {
 
 btnScanCode.onclick = () => {
   scanCode();
+};
+
+btnOpenWindow.onclick = () => {
+  liff.openWindow({
+    url: window.location.href,
+    external: true,
+  });
 };
