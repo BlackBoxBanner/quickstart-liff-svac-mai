@@ -50,7 +50,18 @@ const main = async () => {
     }
   }
 
-  getUserProfile();
+  if (!liff.isInClient()) {
+    if (liff.isLoggedIn()) {
+      btnLogIn.style.display = "none"
+      btnLogOut.style.display = "block"
+      getUserProfile()
+    } else {
+      btnLogIn.style.display = "block"
+      btnLogOut.style.display = "none"
+    }
+  } else {
+    getUserProfile()
+  }
 };
 
 main();
