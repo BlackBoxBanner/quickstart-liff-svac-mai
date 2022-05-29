@@ -24,13 +24,8 @@ const statusMessage = document.getElementById('statusMessage');
 const code = document.getElementById('code');
 const friendShip = document.getElementById('friendShip');
 
-/* 
-async function main() {
-  // Initialize LIFF app)
-  
-  // Try a LIFF function
-} 
-*/
+// Main function
+
 const main = async () => {
   await liff.init({ liffId: '1657173840-Y3WOkO79' });
   checkBackground();
@@ -42,29 +37,24 @@ const main = async () => {
 
   if (!liff.isInClient()) {
     if (liff.isLoggedIn()) {
-      btnLogIn.style.display = "none"
-      btnLogOut.style.display = "block"
+      btnLogIn.style.display = 'none';
+      btnLogOut.style.display = 'block';
+      btnShare.style.display = 'block';
+      getUserProfile();
     } else {
-      btnLogIn.style.display = "block"
-      btnLogOut.style.display = "none"
-    }
-  }
-
-  if (!liff.isInClient()) {
-    if (liff.isLoggedIn()) {
-      btnLogIn.style.display = "none"
-      btnLogOut.style.display = "block"
-      getUserProfile()
-    } else {
-      btnLogIn.style.display = "block"
-      btnLogOut.style.display = "none"
+      btnLogIn.style.display = 'block';
+      btnLogOut.style.display = 'none';
     }
   } else {
-    getUserProfile()
+    getUserProfile();
+    btnSend.style.display = 'block';
+    btnShare.style.display = 'block';
   }
 };
 
 main();
+
+// Compoent function
 
 const checkBackground = () => {
   switch (liff.getOS()) {
@@ -86,11 +76,46 @@ const getUserProfile = async () => {
   email.innerHTML = '<b>email:</b> ' + liff.getDecodedIDToken().email;
 };
 
+const sendMsg = async () => {
+  if (
+    liff.getContext().type !== 'none' &&
+    liff.getContext().type !== 'external'
+  ) {
+    await liff.sendMessages([
+      {
+        type: 'text',
+        text: 'This message was sent by sendMessages()',
+      },
+    ]);
+    alert('Message sent');
+  }
+};
+
+const shareMsg = async () => {
+  await liff.shareTargetPicker([
+    {
+      type: 'image',
+      originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg',
+      previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg',
+    },
+  ]);
+};
+
+// Button control
+
 btnLogIn.onclick = () => {
-  liff.login()
-}
+  liff.login();
+};
 
 btnLogOut.onclick = () => {
-  liff.logout()
-  window.location.reload()
-}
+  liff.logout();
+  window.location.reload();
+};
+
+btnSend.onclick = () => {
+  sendMsg();
+};
+
+btnShare.onclick = () => {
+  shareMsg();
+};
