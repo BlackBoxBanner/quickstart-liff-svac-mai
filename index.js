@@ -93,13 +93,16 @@ const sendMsg = async () => {
 };
 
 const shareMsg = async () => {
-  await liff.shareTargetPicker([
+  const result = await liff.shareTargetPicker([
     {
       type: 'image',
       originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg',
       previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/2016_en_02.jpg',
     },
   ]);
+  if (result) {
+    liff.closeWindow();
+  }
 };
 
 const scanCode = async () => {
