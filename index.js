@@ -88,7 +88,6 @@ const sendMsg = async () => {
         text: 'This message was sent by sendMessages()',
       },
     ]);
-    alert('Message sent');
     liff.closeWindow();
   }
 };
