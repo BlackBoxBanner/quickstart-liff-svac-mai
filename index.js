@@ -34,6 +34,12 @@ async function main() {
 const main = async () => {
   await liff.init({ liffId: '1657173840-Y3WOkO79' });
   checkBackground();
+
+  if (!liff.isInClient()) {
+    btnLogIn.style.display = 'block';
+    btnLogOut.style.display = 'block';
+  }
+
   getUserProfile();
 };
 
