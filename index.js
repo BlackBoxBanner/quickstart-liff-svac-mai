@@ -54,6 +54,12 @@ const main = async () => {
 
 main();
 
+// control
+
+if (liff.isInClient() && liff.getOS() === 'android') {
+  btnScanCode.style.display = 'block';
+}
+
 // Compoent function
 
 const checkBackground = () => {
@@ -101,6 +107,11 @@ const shareMsg = async () => {
   ]);
 };
 
+const scanCode = async () => {
+  const result = await liff.scanCode();
+  code.innerHTML = '<b>Code: </b>' + result.value;
+};
+
 // Button control
 
 btnLogIn.onclick = () => {
@@ -118,4 +129,8 @@ btnSend.onclick = () => {
 
 btnShare.onclick = () => {
   shareMsg();
+};
+
+btnScanCode.onclick = () => {
+  scanCode();
 };
