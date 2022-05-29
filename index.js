@@ -41,6 +41,7 @@ const main = async () => {
       btnLogOut.style.display = 'block';
       btnShare.style.display = 'block';
       getUserProfile();
+      getFriendship();
     } else {
       btnLogIn.style.display = 'block';
       btnLogOut.style.display = 'none';
@@ -49,6 +50,7 @@ const main = async () => {
     getUserProfile();
     btnSend.style.display = 'block';
     btnShare.style.display = 'block';
+    getFriendship();
   }
   btnOpenWindow.style.display = 'block';
 };
@@ -109,6 +111,15 @@ const scanCode = async () => {
   const result = await liff.scanCodeV2();
   code.innerHTML = '<b>Code: </b>' + result.value;
 };
+
+const getFriendship = async () => {
+  let msg = "Hooray! You and our chatbot are friend."
+  const friend = await liff.getFriendship()
+  if (!friend.friendFlag) {
+     msg = "<a href=\"https://line.me/R/ti/p/@BOT-ID\">Follow our chatbot here!</a>"
+  }
+  friendShip.innerHTML = msg;
+}
 
 // Button control
 
