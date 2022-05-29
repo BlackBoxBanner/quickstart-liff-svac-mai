@@ -40,6 +40,16 @@ const main = async () => {
     btnLogOut.style.display = 'block';
   }
 
+  if (!liff.isInClient()) {
+    if (liff.isLoggedIn()) {
+      btnLogIn.style.display = "none"
+      btnLogOut.style.display = "block"
+    } else {
+      btnLogIn.style.display = "block"
+      btnLogOut.style.display = "none"
+    }
+  }
+
   getUserProfile();
 };
 
@@ -64,3 +74,12 @@ const getUserProfile = async () => {
   displayName.innerHTML = '<b>displayName:</b> ' + profile.displayName;
   email.innerHTML = '<b>email:</b> ' + liff.getDecodedIDToken().email;
 };
+
+btnLogIn.onclick = () => {
+  liff.login()
+}
+
+btnLogOut.onclick = () => {
+  liff.logout()
+  window.location.reload()
+}
